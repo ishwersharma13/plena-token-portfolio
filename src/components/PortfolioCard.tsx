@@ -30,7 +30,7 @@ export const PortfolioCard = ({ watchlist, total, lastUpdated }: PortfolioCardPr
     <>
       {/* Desktop View */}
       <div className="hidden md:flex w-full h-72 gap-5 p-6 mb-8 bg-[#27272A] rounded-xl">
-        {/* Left: Portfolio Total */}
+        {/* Left: Portfolio Total calculation */}
         <div className="flex-1 flex flex-col">
           <h2 className="text-gray-400 text-sm mb-2">Portfolio Total</h2>
           <div className="text-white text-4xl font-medium flex-1">

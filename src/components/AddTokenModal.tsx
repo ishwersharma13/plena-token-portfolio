@@ -22,7 +22,7 @@ export const AddTokenModal = ({ isOpen, onClose }: AddTokenModalProps) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Load trending tokens on modal open
+  // Load trending tokens on modal open and closed
   useEffect(() => {
     if (isOpen && tokens.length === 0) loadTrending();
   }, [isOpen]);
