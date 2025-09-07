@@ -1,147 +1,161 @@
-🪙 Crypto Portfolio Tracker
 
-A sleek cryptocurrency portfolio manager built with React, TypeScript, and Redux. Monitor your crypto holdings, track live prices, and manage your assets through a clean, dark-themed interface.
+# 🪙 Crypto Portfolio Tracker
 
-✨ Core Features
-📊 Portfolio Overview
+A sleek cryptocurrency portfolio manager built with **React, TypeScript, and Redux**.  
+Monitor your crypto holdings, track live prices, and manage your assets through a clean, **dark-themed interface**.
 
-Total Portfolio Value: Displays your overall crypto holdings in real-time with a timestamp of the last update.
+A modern, responsive cryptocurrency portfolio tracking application built with React, TypeScript, and Tailwind CSS. Track your crypto investments, view portfolio breakdowns, and manage your watchlist with real-time data.
 
-Interactive Donut Visualization: See your top 6 token holdings at a glance.
+![Homepage](/src/assets/HomeDashboard.png)
+![Mobile](/src/assets/HomeMobile.png)
 
-Mobile & Desktop Ready: Fully responsive layouts.
+---
 
-📈 Watchlist
+## ✨ Core Features
 
-Full Token Info: Logo, name, symbol, price, 24-hour change, and 7-day sparklines.
+### 📊 Portfolio Overview
+- **Total Portfolio Value** – Real-time overall crypto holdings with last updated timestamp  
+- **Interactive Donut Chart** – Displays your top 6 token holdings  
+- **Responsive Layouts** – Works seamlessly on mobile & desktop  
 
-Editable Holdings: Inline editing for precise adjustments.
+### 📈 Watchlist
+- Token info: logo, name, symbol, price, 24h change, 7d sparkline  
+- Inline editing of holdings  
+- Auto-calculated total value = *holdings × current price*  
+- Edit or remove tokens easily  
+- Pagination – 10 items per page  
 
-Auto Value Calculation: Holdings × current price is computed automatically.
+### 🔍 Token Discovery
+- Search tokens by name or symbol  
+- Explore **trending coins** (CoinGecko API)  
+- Add multiple tokens at once  
+- Clear, intuitive selection UI  
 
-Actions per Row: Edit or remove tokens easily.
+### 💳 Wallet Integration
+- Connect **MetaMask** or other browser wallets (wagmi)  
+- Show connected wallet address in header  
+- Wallet state persists across sessions  
 
-Pagination: Cleanly displays 10 items per page.
+### 🎨 UX & Design
+- Modern dark theme  
+- Manual refresh or real-time updates  
+- Skeleton loaders for smooth transitions  
+- Toast notifications (success, error, info)  
+- Subtle animations & hover effects  
 
-🔍 Token Discovery
+---
 
-Smart Search: Find any cryptocurrency by name or symbol.
+## 🛠 Tech Stack
 
-Trending Tokens: Explore popular coins using CoinGecko data.
+- ⚛️ **React 19** + TypeScript  
+- ⚡ **Vite** (dev + build)  
+- 🎨 **Tailwind CSS** (utility-first styling)  
+- 🗂 **Redux Toolkit** (state management)  
+- 🔗 **wagmi** (Ethereum wallet integration)  
+- 📡 **CoinGecko API** (live crypto data)  
+- 💾 **LocalStorage** (persistent portfolio state)  
 
-Multi-select Additions: Add multiple tokens at once to your watchlist.
+---
 
-Clear Selection UI: Radio buttons with checkmarks for clarity.
+## 🚀 Getting Started
 
-💳 Wallet Integration
+### Requirements
+- Node.js **>= 18**  
+- npm **>= 9**
 
-Multiple Wallet Support: Connect MetaMask or browser wallets via wagmi.
-
-Connection Feedback: Display connected wallet addresses in the header.
-
-Persistent State: Wallet connection persists across sessions.
-
-🎨 UX & Design
-
-Dark Theme: Modern, clean dark interface.
-
-Live Updates: Refresh prices manually or see real-time changes.
-
-Loading Indicators: Skeleton loaders for smoother experience.
-
-Notifications: Success, error, and info toast messages.
-
-Animations: Subtle hover effects and transitions throughout.
-
-🛠 Tech Stack
-
-React 19 + TypeScript
-
-Vite - Lightning-fast dev server
-
-Tailwind CSS - Utility-first styling
-
-Redux Toolkit - Simplified state management
-
-React Hooks & Custom Hooks - Reusable logic
-
-LocalStorage - Persistent portfolio data
-
-wagmi - Ethereum wallet integration
-
-CoinGecko API - Cryptocurrency data source
-
-🚀 Getting Started
-Requirements
-Node.js >= 18
-npm >= 9
-
-Installation
-
-Clone the repo:
-
+### Installation
+```bash
 git clone <repo-url>
 cd token-portfolio
 npm install
+````
 
+### Development
 
-Start development:
-
+```bash
 npm run dev
+```
 
+Visit 👉 [http://localhost:5173](http://localhost:5173)
 
-Visit http://localhost:5173
+### Production Build
 
-Build for production:
-
+```bash
 npm run build
 npm run preview
+```
 
-Scripts Overview
-Command	Purpose
-npm run dev	Start dev server with HMR
-npm run build	Compile production-ready code
-npm run lint	Run ESLint
-npm run preview	Preview production build locally
-📊 Data Flow
+---
+
+## 📜 Scripts Overview
+
+| Command           | Purpose                        |
+| ----------------- | ------------------------------ |
+| `npm run dev`     | Start dev server (HMR)         |
+| `npm run build`   | Build production-ready code    |
+| `npm run lint`    | Run ESLint checks              |
+| `npm run preview` | Preview local production build |
+
+---
+
+## 📊 Data Flow
+
+```
 CoinGecko API → Redux Store → React Components → UI
      ↓              ↓              ↓           ↓
-Live data → Global state → Local state → User interface
+ Live Data → Global State → Local State → User Interface
+```
 
-Persistent State Example
-localStorage: {
+### Example Persistent State
+
+```json
+{
   "token-portfolio-state": {
-    portfolio: {
-      watchlist: WatchlistItem[],
-      total: number,
-      lastUpdated: string
+    "portfolio": {
+      "watchlist": [ ... ],
+      "total": 12345,
+      "lastUpdated": "2025-09-07T12:34:56Z"
     }
   }
 }
+```
 
-🎯 Implementation Highlights
-Portfolio Calculations
+---
+
+## 🎯 Implementation Highlights
+
+### Portfolio Calculations
+
+```ts
 token.value = token.holdings * token.price
-portfolio.total = watchlist.reduce((sum, token) => sum + token.value, 0)
+portfolio.total = watchlist.reduce((sum, t) => sum + t.value, 0)
+```
 
-Chart & Display Logic
+### Chart Logic
 
-Only top 6 holdings displayed in donut chart.
+* Top 6 tokens only
+* Consistent color palette
+* Ignores tiny holdings (<0.1%)
 
-Consistent color palette per position.
+### API Integration
 
-Small holdings (<0.1%) handled gracefully.
+```js
+fetchTokenPrices() // batched every 200ms
+sparkline = true   // includes 7-day data
+```
 
-API Integration
-fetchTokenPrices() // Batched with 200ms interval
-sparkline=true     // Include 7-day price data
+### Responsive Layouts
 
-Responsive Breakpoints
-default: Mobile-first layout
-lg: (1024px+) Desktop layout
+* Mobile-first by default
+* `lg:` breakpoints for desktop
 
-🔧 Configuration
-Vite Proxy (for CoinGecko)
+---
+
+## 🔧 Configuration
+
+### Vite Proxy (CoinGecko)
+
+```ts
 server: {
   proxy: {
     '/api': {
@@ -150,65 +164,76 @@ server: {
     }
   }
 }
+```
 
-Wagmi Wallet Setup
+### Wagmi Wallet
+
+```ts
 chains: [mainnet, sepolia]
 connectors: [injected(), metaMask()]
+```
 
-⚡ Performance & Optimization
+---
 
-React: useCallback & useMemo for expensive ops
+## ⚡ Performance & Optimization
 
-Rendering: Avoid unnecessary re-renders
+* `useCallback` + `useMemo` to optimize rendering
+* Batched & cached API requests
+* Production builds are tree-shaken
+* Fast hot-reload during dev
 
-API: Batched & cached requests
+---
 
-Bundle: Tree-shaken for production, fast HMR for dev
+## 🔐 Security
 
-🔐 Security & Data Safety
+* **No private keys stored**
+* Wallet data stays in browser
+* Public API only (no auth needed)
+* TypeScript ensures type safety
 
-No private keys stored locally
+---
 
-Wallet state stays in browser
+## 🎨 Design System
 
-CoinGecko API is public; no auth required
+### Colors
 
-TypeScript enforces compile-time type checks
-
-🎨 Design System
-Colors
---bg-primary: #212124
+```
+--bg-primary:   #212124
 --bg-secondary: #27272A
---accent-primary: #A9E851
+--accent:       #A9E851
 --chart-orange: #FB923C
---chart-purple: #A78BFA  
---chart-pink: #FB7185
---chart-green: #10B981
---chart-blue: #60A5FA
---chart-cyan: #18C9DD
+--chart-purple: #A78BFA
+--chart-pink:   #FB7185
+--chart-green:  #10B981
+--chart-blue:   #60A5FA
+--chart-cyan:   #18C9DD
+```
 
-Typography
+### Typography
 
-Headers: 2xl, xl (semibold)
+* Headers: **2xl, xl** (semibold)
+* Body: base, sm
+* Numbers: monospace font
 
-Body: base, sm
+---
 
-Data: Monospace formatting for numbers
+## 🚀 Deployment
 
-🚀 Deployment
+Supports **Vercel, Netlify, GitHub Pages**.
 
-Vercel, Netlify, GitHub Pages supported
+```bash
+npm run build
+# deploy dist/ folder
+```
 
-npm run build → dist/ ready for deployment
+---
 
-📈 Future Ideas
+## 📈 Future Roadmap
 
-Historical portfolio tracking
+* Historical portfolio tracking
+* Price alerts
+* Multi-currency support
+* Advanced charts (candlestick, volume)
+* Export options (CSV/PDF)
 
-Price alerts
-
-Multi-currency support
-
-Candlestick & volume charts
-
-CSV/PDF export
+---
