@@ -1,24 +1,27 @@
-export default async function handler(req, res) {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+// src/api/chart.ts
 
-  if (req.method === 'OPTIONS') {
-    res.status(200).end();
+export default async function chartHandler(request, response) {
+  // Set CORS headers
+  response.setHeader("Access-Control-Allow-Origin", "*");
+  response.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
+  response.setHeader("Access-Control-Allow-Headers", "Content-Type");
+
+  // Handle preflight requests
+  if (request.method === "OPTIONS") {
+    response.status(200).end();
     return;
   }
 
   try {
-    const { id, days = '7', interval = 'hourly' } = req.query;
-    
-    const url = `https://api.coingecko.com/api/v3/coins/${id}/market_chart?vs_currency=usd&days=${days}&interval=${interval}`;
-    
-    const response = await fetch(url);
-    const data = await response.json();
-    
-    res.status(200).json(data);
-  } catch (error) {
-    console.error('Chart API Error:', error);
-    res.status(500).json({ error: 'Failed to fetch chart data' });
+    const { id, days = "7", interval = "hourly" } = request.query;
+
+    const endpoint = `https://api.coingecko.com/api/v3/coins/${id}/market_chart?vs_currency=usd&days=${days}&interval=${interval}`;
+    const apiRes = await fetch(endpoint);
+    const result = await apiRes.json();
+
+    response.status(200).json(result);
+  } catch (err) {
+    console.error("Error fetching chart data:", err);
+    response.status(500).json({ message: "Unable to fetch chart data" });
   }
 }
